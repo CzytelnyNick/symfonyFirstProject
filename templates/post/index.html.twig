@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <a href="{{ path('post.create')}}"><button type="button" class="btn btn-success">DODAJ</button></a>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr>
+
+                    <td>{{ post.id }}</td>
+                    <td><a href="{{ path('post.show', {id: post.id}) }}">{{ post.title }}</a></td>
+                    <td><a href="{{ path('post.delete', {id: post.id}) }}"><button type="button" class="btn btn-danger">DELETE</button></a></td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('app_logout') }}"><button class="btn btn-danger float-end">WYLOGUJ</button></a>
+        {%  endif %}
+    </div>
+
+{% endblock %}
